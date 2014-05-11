@@ -16,7 +16,7 @@ getData <- function() {
 
     if(file.exists(name_csv_file)) {
         info <- read.csv(name_csv_file)
-        info$Date_Time <- strptime(info$DateTime, "%Y-%m-%d %H:%M:%S") 
+        info$Date_Time <- strptime(info$Date_Time, "%Y-%m-%d %H:%M:%S") 
     }
     else {
         fname <- getFile(url_data, name_zip_file)
