@@ -1,5 +1,4 @@
-## With his function you can:
-##   - make a cache matrix
+## Create a special "matrix", which is really a list containing a function to
 ##   - get/set the value of a matrix
 ##   - get/set the value of the inverse of the matrix
 makeCacheMatrix <- function(x = matrix()) {
