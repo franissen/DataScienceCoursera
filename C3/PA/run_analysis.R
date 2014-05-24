@@ -2,15 +2,15 @@
 # 0) Get into memory all the required data
 activities <- read.table("UCI HAR Dataset/activity_labels.txt")
 features <- read.table("UCI HAR Dataset/features.txt")
-subject1 <- read.table("UCI HAR Dataset/test/subject_test.txt")
-subject2 <- read.table("UCI HAR Dataset/train/subject_train.txt")
-x1 <- read.table("UCI HAR Dataset/test/X_test.txt")
-x2 <- read.table("UCI HAR Dataset/train/X_train.txt")
-y1 <- read.table("UCI HAR Dataset/test/y_test.txt")
-y2 <- read.table("UCI HAR Dataset/train/y_train.txt")
+subject2 <- read.table("UCI HAR Dataset/test/subject_test.txt")
+subject1 <- read.table("UCI HAR Dataset/train/subject_train.txt")
+x2 <- read.table("UCI HAR Dataset/test/X_test.txt")
+x1 <- read.table("UCI HAR Dataset/train/X_train.txt")
+y2 <- read.table("UCI HAR Dataset/test/y_test.txt")
+y1 <- read.table("UCI HAR Dataset/train/y_train.txt")
 
 # 1) Merges the training and the test sets to create one data set.
-subjects <- rbind(subject1, subject2)
+subject <- rbind(subject1, subject2)
 x <- rbind(x1, x2)
 y <- rbind(y1, y2)
 
@@ -27,27 +27,33 @@ y[,1] = activities[y[,1], 2]
 names(y) <- "activity"
 
 # 4) Appropriately labels the data set with descriptive activity names. 
-names(subjects) <- "subject"
-merged <- cbind(subjects, y, x)
+names(subject) <- "subject"
+merged <- cbind(subject, y, x)
 
 write.table(merged, "merged_data.txt")
 
 # 5) Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
 num_activities = length(activities[,1])
-num_subjects = length(unique(subjects)[,1])
-unique_subjects = unique(subjects)[,1]
+num_subjects = length(unique(subject)[,1])
+unique_subjects = unique(subject)[,1]
 
 num_cols = dim(merged)[2]
-result = merged[1:(num_activities*num_subjects), ]
+
+result <- matrix(NA, nrow=num_subjects*num_activities, ncol=num_cols)
+result <- as.data.frame(result)
+colnames(result) <- colnames(merged)
 
 row = 1
 for (s in 1:num_subjects) {
   for (a in 1:num_activities) {
-    result[row, 1] = unique_subjects[s]
-    result[row, 2] = activities[a, 2]
-    temp <- merged[merged$subjects==s & merged$activity==activities[a, 2], ]
-    result[row, 3:num_cols] <- colMeans(temp[, 3:num_cols])
-    row = row + 1
+    condition1 <- s == merged$subject
+    condition2 <- activities[a, 2] == merged$activity
+	
+	result[row, 1] = unique_subjects[s]	
+    result[row, 2] = activities[a, 2]	
+    result[row, 3:num_cols] <- colMeans(merged[condition1&condition2, 3:num_cols])
+	
+    row <- row + 1
   }
 }
 
