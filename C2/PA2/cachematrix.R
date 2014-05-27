@@ -53,5 +53,5 @@ print(cacheSolve(cache))
 message("\nInverse calculation (result from cache):\n")
 print(cacheSolve(cache))
 message("\nVerifying the result: the matrix multiplied by the inverse it's must be the identity's matrix\n")
-print(round(x %*% y))
+print(round(x %*% cacheSolve(cache)))
 
