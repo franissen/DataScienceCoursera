@@ -5,7 +5,7 @@ CodeBook.md
 * Subject: an integer that identify the human subject who collected the data
 * Activity: a string identifying the activity in which the subject was engaged during data collection, can be:  
 
-    1. walking  
+    1. walking 
     2. walking_upstairs
     3. walking_downstairs
     4. sitting  
