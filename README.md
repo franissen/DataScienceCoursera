@@ -7,3 +7,4 @@ Data Science (Coursera)
 * C2: R Programming
 * C3: Getting and Cleaning Data
 * C4: Exploratory Data Analysis
+* C5: Reproducible Research
