@@ -8,3 +8,5 @@ Data Science (Coursera)
 * C3: Getting and Cleaning Data
 * C4: Exploratory Data Analysis
 * C5: Reproducible Research
+* C6: Statistical Inference
+* C7: Regression Models

@@ -1,0 +1,114 @@
+# Coursera - Regression Models (Course Project)
+===============================================
+
+## 1- Executive Summary
+
+The main goals of this study it's to analyse a serie of differences between cars with manual or automatic transmission attending to it's consume.
+
+Many people think that cars with automatic transmission have a better relation between gallons and miles, the true is that it's false, and this study will try to demonstrate it.
+
+We will see a different type of plots and other metrics to illustrate it.
+
+## 2 - Introduction
+
+You work for Motor Trend, a magazine about the automobile industry. Looking at a data set of a collection of cars, they are interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome). They are particularly interested in the following two questions:
+
+* Is an automatic or manual transmission better for MPG
+* Quantifying how different is the MPG between automatic and manual transmissions?"
+
+## 3- Data processing
+
+### Loading and preprocessing the data
+
+The data it's included in "The R Datasets Package" included in RStudio.
+
+It's only necessary make this call to load "mtcars".
+
+```{r}
+data(mtcars)
+```
+## 4- Exploratory data analyses
+
+Seeing documentation of mtcars we see that exists a numeric variable  **am**
+that represents 0 for automatic transmission and 1 for manual transmission.
+
+Then we can split mtcars into to variables: mtcars_automatic and mtcars_manual
+
+#### Resume of cars with automatic transmission:
+
+```{r, "Fig 1 - Scatter diagram - Cars with automatic transmission", fig.path="./figures/"}
+mtcars_automatic <- mtcars[mtcars$am=="0", -c(9)]
+
+pairs(mtcars_automatic, 
+      main = "Cars with automatic tranmission")
+
+summary(mtcars_automatic)
+
+```
+
+#### Resume of cars with manual transmission:
+
+```{r, "Fig 2 - Scatter diagram - Cars with manual transmission", fig.path="./figures/"}
+mtcars_manual <- mtcars[mtcars$am=="1", -c(9)]
+
+pairs(mtcars_manual, 
+      main="Cars with manual transmission")
+
+summary(mtcars_manual)
+
+```
+
+Before giving an answer to the questions of interest we go to compare, using a boxplot, both type of cars with the variable mpg:
+
+```{r, "Fig 3 - BoxPlot - type of transmission VS MPG", fig.path="./figures/"}
+
+boxplot(mtcars$mpg~mtcars$am,
+        main="Comparation type of transmission and MPG",
+        xlab ="Type of transmission",
+        ylab ="MPG",         
+        names = c("Automatic","Manual"),
+        col=rainbow(2))
+
+```
+
+#### Question 1: Is an automatic or manual transmission better for MPG?
+
+Viewing the previous boxplot we can easily see that the cars with manual transmission have more mpg than the cars with automatic transmission.
+
+Then we go to try to demonstrate that this it's true.
+
+```{r}
+cars_comparation <- t.test(x=mtcars_manual, 
+                           y=mtcars_automatic)
+
+cars_comparation
+```
+
+We can conclude that cars with manual transmission are better than cars with automatic transmission *attending only to the mpg*.
+
+#### Question 2: Quantifying how different is the MPG between automatic and manual transmissions?
+
+To quantify how different is the MPG between automatic and manual transmissions we are going to use a simple linear model and see the different information that comes from it.
+
+```{r, "Fig 4 - Linear model mpg ~ type of transmission", fig.path="./figures/"}
+lm_fit <- lm(mpg ~ am, 
+             data=mtcars)
+
+fitted(lm_fit)
+
+coef(lm_fit)
+
+residuals(lm_fit)
+
+par(mfrow=c(2,2))
+plot(lm_fit)
+```
+
+## 5- Conclussions
+
+- A fast analysis with the boxplot was enough to answer the both questions of interest.
+
+- The dataset it's not big enough to make a 100% absolute conclussion about the questions of interest.
+
+- In this dataset, manual transmission cars have a better performance with MPG than the automatic cars have
+
