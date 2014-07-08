@@ -10,3 +10,5 @@ Data Science (Coursera)
 * C5: Reproducible Research
 * C6: Statistical Inference
 * C7: Regression Models
+* C8: Practical Machine Learning
+* C9: Developing Data Products
