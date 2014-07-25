@@ -26,7 +26,7 @@ Then press the button to submit and see the results.
 
 ---
 
-## More info:
+## More info
 
 1. [BMI Calculator](http://franissen.shinyapps.io/bmi_calculator/)
 2. [Wikipedia](http://en.wikipedia.org/wiki/Body_mass_index)
